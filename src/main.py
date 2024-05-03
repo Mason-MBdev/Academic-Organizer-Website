@@ -222,7 +222,7 @@ class MainWindow(QMainWindow):
                 color: #FFFFFF;
                 border: 1px solid #CCCCCC;
                 border-radius: 3px;
-                font-size: 10pt;
+                font-size: 11pt;
             }
         """)
 
