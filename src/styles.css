@@ -3,45 +3,102 @@
 /* Normalize CSS */
 /*----------------------------------------*/
 
+/* Typography */
+/*----------------------------------------*/
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #FFF; /* Light text for dark background */
     background-color: #121212; /* Dark background */
+    margin: 0;
+    padding: 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    color: #FF4500; /* Orange heading */
+    margin: 0;
+}
+
+h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    text-transform: uppercase; /* Convert text to uppercase for emphasis */
+    letter-spacing: 2px; /* Add letter spacing for readability */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow for depth */
+}
+
+/* Containers */
+/*----------------------------------------*/
+
 .container {
-    width: 70vw;
+    width: 80%;
     margin: auto;
     padding: 20px;
     text-align: center; /* Center align content */
 }
 
-/* Course Styles */
+.inner-container {
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Subtle shadow for depth */
+}
+
+/* Header */
 /*----------------------------------------*/
 
-.course {
-    background-color: #333; /* Slightly lighter than body for contrast */
+.header {
+    background-color: #333; /* Dark gray background */
     padding: 20px;
-    margin-top: 15px;
+    margin-bottom: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(255,255,255,0.1); /* Subtle shadow for depth */
 }
+
+.header h1 {
+    font-size: 40px;
+}
+
+/* Course Section */
+/*----------------------------------------*/
+
+.course-section {
+    background-color: #1f1f1f; /* Dark gray background */
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.course {
+    background-color: #333; /* Darker gray background */
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.course h3 {
+    font-size: 24px;
+}
+
+/* Assignment Styles */
+/*----------------------------------------*/
 
 .assignment {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #555;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
+    background-color: #444; /* Gray background */
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 8px;
 }
 
 .assignment > div {
     flex: 1; /* Each wrapper div takes up equal space */
     display: flex;
     align-items: center;
-    text-align: left;
 }
 
 /* Button Styles */
@@ -61,100 +118,11 @@ button:hover {
     background-color: #EAECEE; /* Lighter orange for hover */
 }
 
-.delete-button {
-    text-align: center; /* Center align the delete button */
-}
-
-.delete-button button {
-    background-color: #FF4500;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    width: 20%; /* Ensure delete button matches width */
-}
-
-.delete-button button:hover {
-    background-color: #E74C3C; /* Darker shade of red on hover */
-}
-
-
-/* Heading Styles */
-/*----------------------------------------*/
-
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #FF4500; /* Orange heading */
-    font-size: 30px;
-    text-transform: uppercase; /* Convert text to uppercase for emphasis */
-    letter-spacing: 2px; /* Add letter spacing for readability */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow for depth */
-}
-
-
-/* Statistics Styles */
-/*----------------------------------------*/
-
-#statistics {
-    background-color: #555; /* Dark background for statistics */
-    padding: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(255,255,255,0.1); /* Subtle shadow for depth */
-    width: 70vw;
-}
-
-.grades-section {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 2px solid #FF4500; /* Orange border */
-    background-color: #333; /* Dark background */
-}
-
-/* Added Styles */
-/*----------------------------------------*/
-
-.course-section {
-    background-color: #555; /* Dark background for courses */
-    padding: 20px;
-    margin: auto; /* This will center the div horizontally */
-    margin-top: auto; /* This will center the div vertically */
-    margin-bottom: 100px; /* This will center the div vertically */
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(255,255,255,0.1); /* Subtle shadow for depth */
-    width: 70vw;
-    display: block
-}
-
-.align-left {
-    text-align: left;
-}
-
-.course-summary {
-    display: none; /* Hide course summary by default */
-}
-
-.collapsed .course-summary {
-    display: block; /* Display course summary when collapsed */
-}
-
-.course-toggle::after {
-    content: "\25BC"; /* Down arrow */
-}
-
-.course-toggle.collapsed::after {
-    content: "\25B6"; /* Right arrow */
-}
-
 /* Dropdown Styles */
 /*----------------------------------------*/
 
 #course-dropdown {
-    background-color: #555; /* Dark background */
+    background-color: #555; /* Dark gray background */
     color: #FFF; /* Light text */
     padding: 10px; /* Add some padding */
     border: 2px solid #FF4500; /* Orange border */
@@ -164,11 +132,10 @@ h2 {
     font-size: 16px; /* Font size */
     outline: none; /* Remove default outline */
     margin-bottom: 15px; /* Add margin below the dropdown */
-    width: 200px;
 }
 
 #course-dropdown option {
-    background-color: #555; /* Dark background */
+    background-color: #555; /* Dark gray background */
     color: #FFF; /* Light text */
     padding: 10px; /* Add some padding */
 }
@@ -176,12 +143,10 @@ h2 {
 /* Checkbox Styles */
 /*----------------------------------------*/
 
-/* Hide the default checkbox */
 .completion-checkbox {
     display: none;
 }
 
-/* Customize the appearance of the label */
 .completion-label {
     display: inline-block;
     background-color: #FF4500; /* Orange */
@@ -192,9 +157,22 @@ h2 {
     transition: background-color 0.3s ease;
 }
 
-/* Style when the checkbox is checked */
 .completion-checkbox:checked + .completion-label {
     background-color: #E74C3C; /* Red */
+}
+
+/* Statistics Styles */
+/*----------------------------------------*/
+
+#statistics {
+    background-color: #333; /* Dark gray background */
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Subtle shadow for depth */
+    width: 80%;
+    margin: auto;
 }
 
 /* Legend Styles */
@@ -204,12 +182,74 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #555;
-    padding: 10px;
-    border-radius: 5px;
+    background-color: #555; /* Dark gray background */
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
 }
 
 .legend > div {
     width: 20%;
     text-align: left;
+}
+
+/* Footer */
+/*----------------------------------------*/
+
+.footer {
+    background-color: #333; /* Dark gray background */
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 16px;
+    color: #FFF; /* Light text */
+}
+
+.footer a {
+    color: #FF4500; /* Orange */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #E74C3C; /* Darker shade of red on hover */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
