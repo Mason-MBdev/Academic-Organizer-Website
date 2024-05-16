@@ -9,7 +9,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #FFF; /* Light text for dark background */
-    background-color: #121212; /* Dark background */
+    background-color: #1f1f1f; /* Dark background */
     margin: 0;
     padding: 0;
 }
@@ -248,7 +248,7 @@ button:hover {
 .popup {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
@@ -257,14 +257,29 @@ button:hover {
     background-color: rgba(0,0,0,0.4);
 }
 
+.overlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    backdrop-filter: blur(5px); /* Apply blur effect */
+    z-index: 9997; /* Lower z-index than the popup content */
+}
+
 .popup-content {
     background-color: #333; /* Dark gray background */
     margin: 15% auto;
     padding: 20px;
     border-radius: 10px;
     width: 40%;
-    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
+    border: 1px solid #888; /* Orange border */
+    z-index: 9998; /* Higher z-index than the overlay */
 }
+
 
 .popup h2 {
     color: #FF4500; /* Orange heading */
@@ -344,4 +359,8 @@ button:hover {
     margin-bottom: 20px;
     margin-top: 7px;
     font-size: 20px;
+}
+
+.delete-btn {
+    float: right;
 }

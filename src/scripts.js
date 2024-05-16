@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     let courses = [];
     let assignmentCounter = 0;
+    let courseCounter = 1;
 
     const openPopupBtn = document.getElementById('open-popup-btn');
     const popupMenu = document.getElementById('popup-menu');
@@ -8,10 +9,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     openPopupBtn.addEventListener('click', function() {
         popupMenu.style.display = 'block';
+        showOverlay();
     });
 
     closePopupBtn.addEventListener('click', function() {
         popupMenu.style.display = 'none';
+        hideOverlay();
     });
 
     const addCoursePopupBtn = document.getElementById('add-course-popup-btn');
@@ -28,7 +31,9 @@ document.addEventListener("DOMContentLoaded", function() {
     function addCourseFromPopup(courseTitleInput) {
         const coursesSection = document.querySelector('.course-section');
 
-        const courseId = "course" + (courses.length + 1);
+        // Use the courseCounter for generating unique IDs
+        const courseId = "course" + courseCounter;
+        courseCounter++; // Increment the counter after assigning the ID
         const newCourseDiv = document.createElement('div');
         newCourseDiv.className = 'course';
         newCourseDiv.id = courseId;
@@ -76,14 +81,32 @@ document.addEventListener("DOMContentLoaded", function() {
         addAssignmentButton.onclick = () => openAssignmentPopup(courseId);
         newCourseDiv.appendChild(addAssignmentButton);
 
-        // Get the existing delete button
-        const deleteCourseButton = document.getElementById('delete-course-btn');
+        // Create the delete button
+        const deleteCourseButton = document.createElement('button');
+        deleteCourseButton.textContent = "Delete Course";
+        deleteCourseButton.id = 'delete-course-btn'; // Ensure this ID is unique or use a class instead
+        deleteCourseButton.className = 'delete-btn'; // Add a class for styling
+        newCourseDiv.appendChild(deleteCourseButton);
+        
+        // Define the delete click handler function
+        function handleDeleteClick(event) {
+            event.stopPropagation();
+            console.log('Delete button clicked'); // Log each click
+        
+            const dropdown = document.getElementById('course-dropdown');
+            const selectedCourseId = dropdown.value;
+            console.log(`Outer: Attempting to delete course with ID: ${selectedCourseId}`);
+            deleteCourse(selectedCourseId);
+        
+            // Optionally, disable the button to prevent rapid successive clicks
+            deleteCourseButton.disabled = true;
+            setTimeout(() => {
+                deleteCourseButton.disabled = false;
+            }, 1000); // Enable the button after a short delay
+        }
 
-        // Add event listener to the existing delete button
-        deleteCourseButton.addEventListener('click', () => {
-            const courseId = getCourseId();
-            deleteCourse(courseId);
-        });
+        // Attach the event listener to the delete button
+        deleteCourseButton.addEventListener('click', handleDeleteClick);
 
         courses.push({ id: courseId, title: courseTitleInput, assignments: [], totalWeight: 0 });
         newCourseDiv.style.cssText = 'text-align: left';
@@ -94,9 +117,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const dropdown = document.getElementById('course-dropdown');
         dropdown.value = courseId;
         showSelectedCourse(courseId);
+        hideOverlay();
     }
 
     function openAssignmentPopup(courseId) {
+        showOverlay();
         const assignmentPopup = document.getElementById('assignment-popup');
         assignmentPopup.style.display = 'block';
 
@@ -178,8 +203,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 course.totalWeight += parseFloat(assignmentWeightInput);
 
                 calculateAndDisplayOverallGrade();
-                assignmentPopup.style.display = 'none';
-            } else {
+                assignmentPopup.style.display = 'None';
                 alert("Please fill in all fields.");
             }
         };
@@ -195,18 +219,24 @@ document.addEventListener("DOMContentLoaded", function() {
     function populateCourseDropdown() {
         const dropdown = document.getElementById('course-dropdown');
         dropdown.innerHTML = '';
-
+    
         courses.forEach(course => {
             const option = document.createElement('option');
             option.value = course.id;
             option.textContent = course.title;
             dropdown.appendChild(option);
         });
-
+    
+        // Set the dropdown value to the last added course's ID
+        dropdown.value = courses[courses.length - 1].id;
+    
         dropdown.addEventListener('change', function() {
             const selectedCourseId = this.value;
             showSelectedCourse(selectedCourseId);
         });
+    
+        // Call showSelectedCourse to display the initially selected course
+        showSelectedCourse(dropdown.value);
     }
 
     function showSelectedCourse(courseId) {
@@ -263,6 +293,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function calculateAndDisplayOverallGrade() {
         let totalOverallScore = 0;
+        let totalOverallWeight = 0;
         let totalCompletedCourses = 0;
     
         courses.forEach(course => {
@@ -280,7 +311,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
             if (hasCompletedAssignment) {
                 const courseGrade = totalCourseWeight > 0 ? (totalCourseScore / totalCourseWeight) * 100 : 0;
-                course.grade = courseGrade;
+                course.grade = courseGrade; // Make sure course.grade is initialized
                 totalOverallScore += courseGrade;
                 totalCompletedCourses++;
             }
@@ -296,36 +327,30 @@ document.addEventListener("DOMContentLoaded", function() {
                 courseGradeElement.textContent = `Course Grade: ${course.grade.toFixed(2)}%`;
             }
         });
-    }
+    }    
 
-    function deleteCourse(courseId) {
-        const courseIndex = courses.findIndex(c => c.id === courseId);
-        if (courseIndex === -1) return;
-    
-        courses.splice(courseIndex, 1);
-    
-        const courseDiv = document.getElementById(courseId);
-        if (courseDiv) {
-            courseDiv.remove();
+    function deleteCourse(selectedCourseId) {
+        console.log(`Attempting to delete course with ID: ${selectedCourseId}`);
+        const courseIndex = courses.findIndex(course => course.id === selectedCourseId);
+        if (courseIndex === -1) {
+            console.log("Course not found.");
+            return;
         }
     
+        const deletedCourse = courses.splice(courseIndex, 1)[0];
+        console.log(`Deleted course: ${deletedCourse.title}`);
+    
+        const courseDiv = document.getElementById(selectedCourseId);
+        if (courseDiv) {
+            courseDiv.remove();
+            console.log("Removed course from DOM.");
+        } else {
+            console.log("Course div not found in DOM.");
+        }
+    
+        // Assuming these functions update the UI accordingly
         populateCourseDropdown();
         calculateAndDisplayOverallGrade();
-    }
-
-    const addCourseButton = document.getElementById('add-course-btn');
-    if (addCourseButton) {
-        addCourseButton.addEventListener('click', addCourse);
-    } else {
-        console.error("Add course button not found.");
-    }
-
-    const coursesTitle = document.querySelector('.course-section h3');
-    if (coursesTitle) {
-        const courseSection = document.querySelector('.course-section');
-        courseSection.insertBefore(coursesTitle, courseSection.firstChild);
-    } else {
-        console.error("Courses title element not found.");
     }
 
     // Close assignment popup when close button is clicked
@@ -333,15 +358,28 @@ document.addEventListener("DOMContentLoaded", function() {
     if (closeAssignmentPopupBtn) {
         closeAssignmentPopupBtn.addEventListener('click', function() {
             document.getElementById('assignment-popup').style.display = 'none';
+            hideOverlay();
         });
     } else {
         console.error("Close assignment popup button not found.");
     }
 
+    // Function to show the overlay
+    function showOverlay() {
+        var overlay = document.querySelector('.overlay');
+        overlay.style.display = 'block';
+    }
+
+    // Function to hide the overlay
+    function hideOverlay() {
+        var overlay = document.querySelector('.overlay');
+        overlay.style.display = 'none';
+    }
+
     populateCourseDropdown();
 });
 
-function getCourseId() {
+function courseId() {
     const dropdown = document.getElementById('course-dropdown');
     return dropdown.value;
 }
