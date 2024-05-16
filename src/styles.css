@@ -66,16 +66,16 @@ h2 {
 .course-section {
     background-color: #1f1f1f; /* Dark gray background */
     padding: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid #333; /* Add border */
 }
 
 .course {
     background-color: #333; /* Darker gray background */
     padding: 20px;
-    margin-top: 20px;
+    margin-top: 50px;
     border-radius: 10px;
+    border: 1px solid #555; /* Add border */
 }
 
 .course h3 {
@@ -92,7 +92,9 @@ h2 {
     background-color: #444; /* Gray background */
     padding: 15px;
     margin-top: 15px;
+    margin-bottom: 15px;
     border-radius: 8px;
+    border: 1px solid #777; /* Add border */
 }
 
 .assignment > div {
@@ -161,20 +163,6 @@ button:hover {
     background-color: #E74C3C; /* Red */
 }
 
-/* Statistics Styles */
-/*----------------------------------------*/
-
-#statistics {
-    background-color: #333; /* Dark gray background */
-    padding: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Subtle shadow for depth */
-    width: 80%;
-    margin: auto;
-}
-
 /* Legend Styles */
 /*----------------------------------------*/
 
@@ -186,6 +174,8 @@ button:hover {
     padding: 15px;
     border-radius: 8px;
     margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #777; /* Add border */
 }
 
 .legend > div {
@@ -252,4 +242,106 @@ button:hover {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+/* Pop-up Styles */
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.popup-content {
+    background-color: #333; /* Dark gray background */
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 40%;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Subtle shadow for depth */
+}
+
+.popup h2 {
+    color: #FF4500; /* Orange heading */
+    margin-bottom: 20px;
+}
+
+.popup input[type="text"],
+.popup input[type="number"] {
+    background-color: #555; /* Dark gray background */
+    color: #FFF; /* Light text */
+    padding: 10px; /* Add some padding */
+    border: 2px solid #FF4500; /* Orange border */
+    border-radius: 5px; /* Add border radius */
+    width: calc(100% - 22px); /* Subtract padding and border width */
+    font-size: 16px; /* Font size */
+    margin-bottom: 15px; /* Add margin below the input */
+}
+
+.popup input[type="text"]::placeholder,
+.popup input[type="number"]::placeholder {
+    color: #FFF; /* Light text */
+}
+
+.popup button {
+    background-color: #FF4500; /* Orange */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Make button fill the container width */
+}
+
+.popup button:hover {
+    background-color: #EAECEE; /* Lighter orange for hover */
+}
+
+.popup .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.popup .close:hover,
+.popup .close:focus {
+    color: #FFF; /* White */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Close button styles */
+.close-popup {
+    color: #aaaaaa;
+    font-size: 32px; /* Increase the font size */
+    font-weight: bold;
+    float: right; /* Align to the right */
+    margin-top: -10px; /* Adjust vertical alignment */
+    margin-right: -10px; /* Adjust horizontal alignment */
+    cursor: pointer;
+}
+
+.close-popup:hover,
+.close-popup:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+.app-title {
+    display: block;
+    align-items: left;
+    gap: 30px;
+}
+
+.overall-grade p{
+    margin-bottom: 20px;
+    margin-top: 7px;
+    font-size: 20px;
 }

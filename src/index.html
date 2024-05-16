@@ -8,20 +8,47 @@
 </head>
 <body>
 
-<div id="statistics" class="container">
-    <h2>Statistics</h2>
-    <p id="overall-grade">Overall Grade: N/A</p>
-</div>
-
 <div id="courses-container">
     <div class="course-section">
-        <h2 class="align-left">Courses</h2>
-        <button id="add-course-btn">Add Course</button> <!-- HTML button for adding courses -->
-
+        <div class="app-title">
+            <h2>Courses</h2>
+            <div class="overall-grade">
+                <p id="overall-grade">Overall Grade: N/A</p>
+            </div>
+        </div>
         <select id="course-dropdown" required>
             <option value="" disabled selected>Add a course to start</option>
             <!-- Dropdown options will be populated dynamically -->
         </select>
+
+        <!-- Add a new button to trigger the popup menu -->
+        <button id="open-popup-btn">Add Course</button>
+
+        <!-- New button to delete the selected course -->
+        <button id="delete-course-btn">Delete Course</button>
+
+    </div>
+</div>
+
+<!-- Course popup menu -->
+<div id="popup-menu" class="popup">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <h2>Add Course</h2>
+    <input type="text" id="course-name-input" placeholder="Enter course name">
+    <button id="add-course-popup-btn">Add</button>
+  </div>
+</div>
+
+<!-- Assignment Popup Menu -->
+<div id="assignment-popup" class="popup">
+    <div class="popup-content">
+        <span class="close-popup">&times;</span>
+        <h2>Add Assignment</h2>
+        <input type="text" id="assignment-name-input" placeholder="Assignment Name">
+        <input type="number" id="assignment-grade-input" placeholder="Assignment Grade">
+        <input type="number" id="assignment-weight-input" placeholder="Assignment Weight (as %)">
+        <button id="add-assignment-popup-btn">Add Assignment</button>
     </div>
 </div>
 
