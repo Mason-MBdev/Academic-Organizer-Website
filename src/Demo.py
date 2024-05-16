@@ -252,9 +252,6 @@ class MainWindow(QMainWindow):
             self.text_course_details.clear()
             self.text_course_details.append(f"Name: {course.name}\n")
             self.text_course_details.append(f"Grade: {course_grade:.2f}%\n")
-            self.text_course_details.append("Assignments:\n")
-            for assignment_name, assignment in course.assignments.items():
-                self.text_course_details.append(f"- {assignment_name}: {assignment['score']} / {assignment['max_score']}")
 
     def update_assignment_list(self, course_name):
         course = self.student.get_course_by_name(course_name)

@@ -1,0 +1,215 @@
+/* Basic Reset */
+/*----------------------------------------*/
+/* Normalize CSS */
+/*----------------------------------------*/
+
+body {
+    font-family: Arial, sans-serif;
+    color: #FFF; /* Light text for dark background */
+    background-color: #121212; /* Dark background */
+}
+
+.container {
+    width: 70vw;
+    margin: auto;
+    padding: 20px;
+    text-align: center; /* Center align content */
+}
+
+/* Course Styles */
+/*----------------------------------------*/
+
+.course {
+    background-color: #333; /* Slightly lighter than body for contrast */
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(255,255,255,0.1); /* Subtle shadow for depth */
+}
+
+.assignment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #555;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.assignment > div {
+    flex: 1; /* Each wrapper div takes up equal space */
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+/* Button Styles */
+/*----------------------------------------*/
+
+button {
+    background-color: #FF4500; /* Orange */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #EAECEE; /* Lighter orange for hover */
+}
+
+.delete-button {
+    text-align: center; /* Center align the delete button */
+}
+
+.delete-button button {
+    background-color: #FF4500;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 20%; /* Ensure delete button matches width */
+}
+
+.delete-button button:hover {
+    background-color: #E74C3C; /* Darker shade of red on hover */
+}
+
+
+/* Heading Styles */
+/*----------------------------------------*/
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #FF4500; /* Orange heading */
+    font-size: 30px;
+    text-transform: uppercase; /* Convert text to uppercase for emphasis */
+    letter-spacing: 2px; /* Add letter spacing for readability */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow for depth */
+}
+
+
+/* Statistics Styles */
+/*----------------------------------------*/
+
+#statistics {
+    background-color: #555; /* Dark background for statistics */
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(255,255,255,0.1); /* Subtle shadow for depth */
+    width: 70vw;
+}
+
+.grades-section {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 2px solid #FF4500; /* Orange border */
+    background-color: #333; /* Dark background */
+}
+
+/* Added Styles */
+/*----------------------------------------*/
+
+.course-section {
+    background-color: #555; /* Dark background for courses */
+    padding: 20px;
+    margin: auto; /* This will center the div horizontally */
+    margin-top: auto; /* This will center the div vertically */
+    margin-bottom: 100px; /* This will center the div vertically */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(255,255,255,0.1); /* Subtle shadow for depth */
+    width: 70vw;
+    display: block
+}
+
+.align-left {
+    text-align: left;
+}
+
+.course-summary {
+    display: none; /* Hide course summary by default */
+}
+
+.collapsed .course-summary {
+    display: block; /* Display course summary when collapsed */
+}
+
+.course-toggle::after {
+    content: "\25BC"; /* Down arrow */
+}
+
+.course-toggle.collapsed::after {
+    content: "\25B6"; /* Right arrow */
+}
+
+/* Dropdown Styles */
+/*----------------------------------------*/
+
+#course-dropdown {
+    background-color: #555; /* Dark background */
+    color: #FFF; /* Light text */
+    padding: 10px; /* Add some padding */
+    border: 2px solid #FF4500; /* Orange border */
+    border-radius: 5px; /* Add border radius */
+    cursor: pointer;
+    width: 100%; /* Set width to fill the container */
+    font-size: 16px; /* Font size */
+    outline: none; /* Remove default outline */
+    margin-bottom: 15px; /* Add margin below the dropdown */
+    width: 200px;
+}
+
+#course-dropdown option {
+    background-color: #555; /* Dark background */
+    color: #FFF; /* Light text */
+    padding: 10px; /* Add some padding */
+}
+
+/* Checkbox Styles */
+/*----------------------------------------*/
+
+/* Hide the default checkbox */
+.completion-checkbox {
+    display: none;
+}
+
+/* Customize the appearance of the label */
+.completion-label {
+    display: inline-block;
+    background-color: #FF4500; /* Orange */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Style when the checkbox is checked */
+.completion-checkbox:checked + .completion-label {
+    background-color: #E74C3C; /* Red */
+}
+
+/* Legend Styles */
+/*----------------------------------------*/
+
+.legend {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #555;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.legend > div {
+    width: 20%;
+    text-align: left;
+}
