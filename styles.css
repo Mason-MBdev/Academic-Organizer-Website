@@ -9,7 +9,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #FFF; /* Light text for dark background */
-    background-color: #1f1f1f; /* Dark background */
+    background-color: #121212; /* Dark background */
     margin: 0;
     padding: 0;
 }
@@ -113,11 +113,11 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
 }
 
 button:hover {
-    background-color: #EAECEE; /* Lighter orange for hover */
+    background-color: #a52c00; /* Lighter orange for hover */
 }
 
 /* Dropdown Styles */
@@ -220,6 +220,7 @@ button:hover {
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
+    z-index: 9998; /* Higher z-index than the overlay */
 }
 
 .modal-content {
@@ -248,25 +249,14 @@ button:hover {
 .popup {
     display: none;
     position: fixed;
-    z-index: 9999;
+    z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
-}
-
-.overlay {
-    display: none; /* Initially hidden */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
-    backdrop-filter: blur(5px); /* Apply blur effect */
-    z-index: 9997; /* Lower z-index than the popup content */
+    z-index: 9998; /* Higher z-index than the overlay */
 }
 
 .popup-content {
@@ -275,11 +265,9 @@ button:hover {
     padding: 20px;
     border-radius: 10px;
     width: 40%;
-    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Subtle shadow for depth */
     border: 1px solid #888; /* Orange border */
-    z-index: 9998; /* Higher z-index than the overlay */
 }
-
 
 .popup h2 {
     color: #FF4500; /* Orange heading */
@@ -361,6 +349,46 @@ button:hover {
     font-size: 20px;
 }
 
+.assignment.assignment-details-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #444; /* Dark gray background */
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #777; /* Add border */
+}
+
+.assignment.assignment-details-container > div {
+    width: 20%;
+    text-align: left;
+}
+
 .delete-btn {
-    float: right;
+    /* align to the right side of parent */
+    align-self: flex-end;
+}
+
+.button-div {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hidden {
+    display: none;
+}
+
+.overlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.1); /* Semi-transparent black background */
+    backdrop-filter: blur(5px); /* Apply blur effect */
+    z-index: 9997; /* Lower z-index than the popup content */
 }
