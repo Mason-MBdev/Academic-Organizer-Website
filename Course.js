@@ -22,7 +22,7 @@ class Course {
 
     // Calculate the weighted sum of grades
     calculateWeightedSum() {
-        return this.assignments.reduce((sum, assignment) => sum + assignment.grade * assignment.weight / 100, 0);
+        return parseFloat(this.assignments.reduce((sum, assignment) => sum + assignment.grade * assignment.weight / 100, 0).toFixed(2));
     }
 
     // Method to add an assignment to the course

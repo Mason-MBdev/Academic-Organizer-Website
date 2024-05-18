@@ -48,6 +48,7 @@ function updateAssignmentsDisplay(courseId) {
     ['Name', 'Grade', 'Weighted Grade', 'Completion', 'Operations'].forEach(text => {
         const legendItem = document.createElement('div');
         legendItem.textContent = text;
+        legendItem.style.fontWeight = 'bold';
         legendDiv.appendChild(legendItem);
     });
 
@@ -71,7 +72,7 @@ function updateAssignmentsDisplay(courseId) {
         const gradeElement = document.createElement('div');
         gradeElement.textContent = `${assignment.grade}%`;
 
-        const assignmentWeightedScore = assignment.grade * (assignment.weight / 100);
+        const assignmentWeightedScore = (assignment.grade * (assignment.weight / 100)).toFixed(2);
         const weightedGradeElement = document.createElement('div');
         weightedGradeElement.textContent = `${assignmentWeightedScore} / ${assignment.weight}%`;
 
@@ -115,7 +116,7 @@ function displayCourses() {
 
     // Check if the div exists before attempting to clear its content
     if (!coursesLoadedDiv) {
-        console.warn('Could not find.courses-loaded');
+        console.warn('Could not find .courses-loaded');
         return; // Exit the function if the div is not found
     }
 
@@ -256,19 +257,17 @@ function addAssignmentFromPopup() {
 }
 
 function removeAssignmentFromCourse(courseId, assignmentId) {
-    // Implementation depends on how your data is structured
-    // For example, if you have an array of assignments for a course:
     const course = courseManager.getCourseById(courseId);
     if (course && course.assignments) {
-        course.assignments = course.assignments.filter(assignment => assignment.id!== assignmentId);
+        course.assignments = course.assignments.filter(assignment => assignment.id !== assignmentId);
         console.log(`Assignment with ID ${assignmentId} removed from course with ID ${courseId}`);
-        // Update the UI to reflect the change
         updateAssignmentsDisplay(courseId);
     }
 }
 
 function updateOverallGradeDisplay() {
-    const course = courseManager.getCourseById(document.getElementById('course-dropdown').value);
+    const selectedCourseId = document.getElementById('course-dropdown').value;
+    const course = courseManager.getCourseById(selectedCourseId);
     
     if (course) {
         course.recalculateCourseGrade();
@@ -285,6 +284,9 @@ function updateOverallGradeDisplay() {
 
 function deleteCourse(courseId) {
     courseManager.removeCourse(courseId);
+    if (courseManager.courses.length > 0) {
+        document.getElementById('course-dropdown').value = courseManager.courses[0].id;
+    }
     populateCourseDropdown();
     displayCourses();
     updateOverallGradeDisplay();
@@ -300,9 +302,57 @@ function hideOverlay() {
     overlay.style.display = 'none';
 }
 
+function saveData() {
+    // Save the courseManager object to a file
+    saveToFile(courseManager);
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
-    // Your initialization code goes here
-    // Attach event listeners after the DOM is fully loaded
+    const fileInput = document.getElementById('fileInput');
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        
+        if (!file) {
+            console.error("No file selected.");
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+            try {
+                const savedCourseManager = JSON.parse(event.target.result);
+
+                // print all of the information from the file
+                console.log(savedCourseManager);
+                
+                if (!savedCourseManager || !Array.isArray(savedCourseManager.courses)) {
+                    throw new Error("Invalid data format.");
+                }
+                
+                savedCourseManager.courses.forEach(course => {
+                    const newCourse = courseManager.addCourseLoad(course.title, course.id, course.assignments);
+                    console.log(`Course loaded: ${newCourse.id}` + ` ${newCourse.title}` + ` ${newCourse.assignments}`);
+                    populateCourseDropdown();
+                });
+
+                // select the last course in the dropdown
+                document.getElementById('course-dropdown').value = courseManager.courses[courseManager.courses.length - 1].id;
+                displayCourses();
+                updateOverallGradeDisplay();
+
+            } catch (error) {
+                console.error("Error while processing file:", error);
+            }
+        };
+
+        reader.onerror = (event) => {
+            console.error("File read error:", event.target.error);
+        };
+
+        reader.readAsText(file);
+    });
 
     document.getElementById('course-dropdown').addEventListener('change', () => {
         const selectedCourseId = document.getElementById('course-dropdown').value;
@@ -311,8 +361,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             displayCourses(); // Re-display courses to show/hide the selected one
         }
     });
-    
-    
+
+    // save button
+    document.getElementById('save-btn').addEventListener('click', saveData);
+
     // Open Course Popup Button
     document.getElementById('open-popup-btn').addEventListener('click', openAddCoursePopup);
 

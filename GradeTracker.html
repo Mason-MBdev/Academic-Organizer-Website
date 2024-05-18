@@ -18,16 +18,13 @@
         </div>
         <select id="course-dropdown" required>
             <option value="" disabled selected>Select a course</option>
-            <!-- Dropdown options will be populated dynamically -->
         </select>
 
-        <!-- Button to trigger the course addition popup -->
+        <!-- Operation buttons -->
         <button id="open-popup-btn">Add Course</button>
-        
-        <!-- Buttons for saving and loading data
         <button id="save-btn">Save</button>
-        <input type="file" id="load-file-input">
-        <button id="load-btn">Load</button> -->
+        <label class="custom-file-input" for="fileInput">Load</label>
+        <input type="file" id="fileInput">
 
         <div class="courses-loaded"> </div>
     </div>
@@ -61,6 +58,7 @@
 <script src="Assignment.js"></script>
 <script src="CourseManager.js"></script>
 <script src="App.js"></script>
+<script src="Persistence.js"></script>
 
 </body>
 </html>

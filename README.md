@@ -1,7 +1,15 @@
 # Academic-Organizer
-Organizer for students' coursework
 
-This is a draft version of the GUI and Code, 
-currently all of the grade management is implemented but more features and stats will be added soon.
+This is a draft version of the GUI and Code, more will be coming soon.
 
-Due date and time manager functions in-progress
+<b>Implemented:</b>
+- Add & Delete - Courses & Assignments
+- Course & Overall Grade Calculations
+- Save & Load Cata
+
+<br>
+
+<b>In-Progress:</b>
+- Due Dates
+- Calendar System
+- Web API

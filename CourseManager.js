@@ -17,6 +17,15 @@ class CourseManager {
     addCourse(title) {
         const newCourse = new Course(this.generateUniqueId(), title, []);
         this.courses.push(newCourse);
+        console.log(`Course ${title} added successfully`);
+        return newCourse;
+    }
+
+    addCourseLoad(title, id, assignments) {
+        const newCourse = new Course(id, title, assignments);
+        newCourse.recalculateCourseGrade();
+        this.courses.push(newCourse);
+        console.log(`Course ${title} added successfully v2`);
         return newCourse;
     }
 
