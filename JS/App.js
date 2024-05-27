@@ -2,7 +2,7 @@ const courseManager = new CourseManager();
 
 function populateCourseDropdown() {
     const courseDropdown = document.getElementById('course-dropdown');
-    courseDropdown.innerHTML = '<option value="" disabled selected>Select a course</option>'; // Default option
+    courseDropdown.innerHTML = '<option value="" disabled selected>Select or add a course to start</option>'; // Default option
 
     courseManager.courses.forEach(course => {
         const option = document.createElement('option');
@@ -307,51 +307,94 @@ function saveData() {
     saveToFile(courseManager);
 }
 
+function loadFromFile(file) {        
+    if (!file) {
+        console.error("No file selected.");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+        try {
+            const savedCourseManager = JSON.parse(event.target.result);
+
+            // print all of the information from the file
+            console.log(savedCourseManager);
+            
+            if (!savedCourseManager || !Array.isArray(savedCourseManager.courses)) {
+                throw new Error("Invalid data format.");
+            }
+            
+            savedCourseManager.courses.forEach(course => {
+                const newCourse = courseManager.addCourseLoad(course.title, course.id, course.assignments);
+                console.log(`Course loaded: ${newCourse.id}` + ` ${newCourse.title}` + ` ${newCourse.assignments}`);
+                populateCourseDropdown();
+            });
+
+            // select the last course in the dropdown
+            document.getElementById('course-dropdown').value = courseManager.courses[courseManager.courses.length - 1].id;
+            displayCourses();
+            updateOverallGradeDisplay();
+
+        } catch (error) {
+            console.error("Error while processing file:", error);
+        }
+    };
+
+    reader.onerror = (event) => {
+        console.error("File read error:", event.target.error);
+    };
+
+    reader.readAsText(file);
+}
+
+function insertDemoData() {
+    const demoData = {
+        courses: [
+            {
+                id: "1",
+                title: "Math",
+                assignments: [
+                    { id: "1", name: "Algebra Test", grade: 85, weight: 20, completed: true },
+                    { id: "2", name: "Geometry Test", grade: 90, weight: 30, completed: true },
+                    { id: "3", name: "Calculus Test", grade: 75, weight: 50, completed: true }
+                ]
+            },
+            {
+                id: "2",
+                title: "Science",
+                assignments: [
+                    { id: "4", name: "Biology Test", grade: 80, weight: 25, completed: true },
+                    { id: "5", name: "Chemistry Test", grade: 85, weight: 35, completed: true },
+                    { id: "6", name: "Physics Test", grade: 90, weight: 40, completed: true }
+                ]
+            }
+        ]
+    };
+
+    courseManager.courses = [];
+
+    demoData.courses.forEach(course => {
+        const newCourse = courseManager.addCourseLoad(course.title, course.id, course.assignments);
+        console.log(`Course loaded: ${newCourse.id}` + ` ${newCourse.title}` + ` ${newCourse.assignments}`);
+    });
+
+    // select the first course in the dropdown
+    populateCourseDropdown();
+    document.getElementById('course-dropdown').value = courseManager.courses[1].id;
+    console.log(document.getElementById('course-dropdown').value);
+    displayCourses();
+    updateOverallGradeDisplay();
+    console.log(document.getElementById('course-dropdown').value);
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
     const fileInput = document.getElementById('fileInput');
 
     fileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
-        
-        if (!file) {
-            console.error("No file selected.");
-            return;
-        }
-
-        const reader = new FileReader();
-
-        reader.onload = (event) => {
-            try {
-                const savedCourseManager = JSON.parse(event.target.result);
-
-                // print all of the information from the file
-                console.log(savedCourseManager);
-                
-                if (!savedCourseManager || !Array.isArray(savedCourseManager.courses)) {
-                    throw new Error("Invalid data format.");
-                }
-                
-                savedCourseManager.courses.forEach(course => {
-                    const newCourse = courseManager.addCourseLoad(course.title, course.id, course.assignments);
-                    console.log(`Course loaded: ${newCourse.id}` + ` ${newCourse.title}` + ` ${newCourse.assignments}`);
-                    populateCourseDropdown();
-                });
-
-                // select the last course in the dropdown
-                document.getElementById('course-dropdown').value = courseManager.courses[courseManager.courses.length - 1].id;
-                displayCourses();
-                updateOverallGradeDisplay();
-
-            } catch (error) {
-                console.error("Error while processing file:", error);
-            }
-        };
-
-        reader.onerror = (event) => {
-            console.error("File read error:", event.target.error);
-        };
-
-        reader.readAsText(file);
+        loadFromFile(file);
     });
 
     document.getElementById('course-dropdown').addEventListener('change', () => {
@@ -383,4 +426,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Initialize the dropdown with existing courses
     populateCourseDropdown();
     displayCourses();
+    updateOverallGradeDisplay();
+    
+    // Load demo data with function
+    insertDemoData();
 });
