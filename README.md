@@ -10,6 +10,5 @@ This is a draft version of the GUI and Code, more will be coming soon.
 <br>
 
 <b>In-Progress:</b>
-- Due Dates
+- Task list
 - Calendar System
-- Web API
