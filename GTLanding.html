@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer Landing</title>
+    <link rel="stylesheet" href="./CSS/OrganizerStyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="GT-landing-container">
+<div id = "landing-container" class = "landing-container">
+    <div id = "landing-content" class = "landing-content">
+        <div id="landing-top" class="landing-top">
+            <h2 style="margin-bottom: 10px;"> Academic Organizer V.1</h2>
+            <p style="margin-top: 0px; text-align: center;">Universities are chronically bad at displaying the information you need to know about your own grades, this is my solution, use at your own peril.</p>
+        </div>
+
+        <div id = "landing-left" class = "landing-left">
+            <div id="feature-accordion" class="feature-accordion">
+                <h3 style="text-align: center; margin-bottom: 15px; margin-top: 0px;">Features</h3>
+                <div class="accordion">
+                    <button class="accordion-header">Grades +</button>
+                    <div class="accordion-content">
+                        <p>- Track assignment completion and grades.</p>
+                        <p>- See course stats: weighted grades, assignments remaining, and min/max grades.</p>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <button class="accordion-header">Tasks +</button>
+                    <div class="accordion-content">
+                        <p>- To-do list, for tracking tasks and their due dates.</p>
+                        <p>- See the soonest task due, and how many tasks are left to be completed.</p>
+                        <p>- Sort and filter tasks based on categories.</p>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <button class="accordion-header">Calendar +</button>
+                    <div class="accordion-content">
+                        <p>- IN PROGRESS !!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                const headers = document.querySelectorAll('.accordion-header');
+
+                headers.forEach(header => {
+                    header.addEventListener('click', () => {
+                        const accordion = header.parentElement;
+                        const content = accordion.querySelector('.accordion-content');
+
+                        // Close all accordions
+                        headers.forEach(h => {
+                            const otherAccordion = h.parentElement;
+                            const otherContent = otherAccordion.querySelector('.accordion-content');
+
+                            if (otherAccordion !== accordion && otherAccordion.classList.contains('open')) {
+                                otherAccordion.classList.remove('open');
+                                otherContent.style.display = 'none';
+                                // Reset the header text back to "+" when closed
+                                h.innerText = h.innerText.replace(' -', ' +');
+                            }
+                        });
+
+                        // Toggle the clicked accordion
+                        accordion.classList.toggle('open');
+                        
+                        // Toggle the text for the clicked header
+                        if (accordion.classList.contains('open')) {
+                            header.innerText = header.innerText.replace(' +', ' -');
+                            content.style.display = 'block'; // Show content when opened
+                        } else {
+                            header.innerText = header.innerText.replace(' -', ' +');
+                            content.style.display = 'none'; // Hide content when closed
+                        }
+                    });
+                });
+            </script>
+        </div>
+
+        <div id = "landing-right" class = "landing-right">
+            <button id="google-sign-in-btn" onclick="window.location.href='https://mbdev.ca/Organizer project/GradeTracker.html'">
+                Open Organizer
+                <!-- <i class="fa fa-save" style="margin-left: 15px; font-size: 20px;"></i> -->
+            </button>
+
+            <!-- <button id="google-sign-in-btn" onclick="signInWithGoogle()">
+                Cloud Save / Load  
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo">
+            </button> -->
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    (function() {
+        let x = 0, y = 0;
+        let targetX = 0, targetY = 0;
+        const speed = 0.1;
+
+        function updateBackgroundPosition() {
+            x += (targetX - x) * speed;
+            y += (targetY - y) * speed;
+            document.body.style.backgroundPosition = `${x}% ${y}%`;
+            requestAnimationFrame(updateBackgroundPosition);
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            targetX = (e.clientX / window.innerWidth) * 100;
+            targetY = (e.clientY / window.innerHeight) * 100;
+        });
+
+        requestAnimationFrame(updateBackgroundPosition);
+    })();
+</script>
+<script src="scripts/auth.js"></script>
+<!-- <script src="scripts/index.js"></script> -->
+</body>

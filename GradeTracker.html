@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management System</title>
+    <link rel="stylesheet" href="./CSS/OrganizerStyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Include Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js"></script>
+    <!-- Include Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.20.0/firebase-auth.js"></script>
+    <!-- Include Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.20.0/firebase-firestore.js"></script>
+    <!-- Include Firebase Database -->
+    <script src="https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js"></script>
+</head>
+<body>
+
+<div id="courses-container">
+    <div class="course-section">
+        <div class="persistent-elements">
+            <div class="nav-menu-buttons nav-element">
+                <!-- <h2 style="margin: 0px;">Menu</h2> -->
+                <button id="grades-btn">Grades </i></button>
+                <button id="tasks-btn">Tasks </i></button>
+                <button id="calendar-btn">Calendar </i></button>
+            </div>
+            <div class="nav-menu-buttons nav-element">
+                <button id="accountPopupButton" style="display: block; margin: 0 auto; text-align: center; width: 250px;">
+                    Settings <i class="fa-solid fa-gear" style="vertical-align: middle;"></i>
+                </button>
+            </div>
+        </div>
+        <div class="courses-loaded"> </div>
+    </div>
+</div>
+
+<div class="popup" id="login-popup">
+    <div class="popup-content">
+        <span id="userLoginPopupCloseButton" class="close-popup">&times;</span>
+        <h2>Log in</h2><br/>
+        <form id="login-form">
+            <div class="input">
+                <input type="email" id="login-email" placeholder = "Email" required />
+            </div>
+            <div style="margin-bottom: 20px;" >
+                <input type="password" id="login-password" placeholder = "Password" required />
+            </div>
+            <!-- <div>
+                <input type="text" id="signup-bio" placeholder = "One Line Bio" required />
+            </div> -->
+            <button>Log in</button>
+        </form>
+    </div>
+</div>
+
+<!-- Course popup menu -->
+<div id="popup-menu" class="popup">
+  <div class="popup-content">
+    <span class="close" id="close">&times;</span>
+    <h2>Add Course</h2>
+    <input type="text" id="course-name-input" placeholder="Enter course name">
+    <button id="add-course-popup-btn">Add</button>
+  </div>
+</div>
+
+<!-- Assignment Popup Menu -->
+<div id="assignment-popup" class="popup">
+    <div class="popup-content">
+        <span class="close-popup">&times;</span>
+        <h2>Add Assignment</h2>
+        <input type="text" id="assignment-name-input" placeholder="Name">
+        <div style="display: flex; gap: 20px;">
+            <input type="number" id="assignment-grade-input" placeholder="Grade ( % )">
+            <input type="number" id="assignment-weight-input" placeholder="Weight ( % )">
+        </div>
+        <button id="add-assignment-popup-btn">Add</button>
+    </div>
+</div>
+
+<!-- Assignment Popup Menu -->
+<div id="assignment-edit-popup" class="popup">
+    <div class="popup-content">
+        <span id="close-edit-popup" class="close-popup">&times;</span>
+        <h2>Add Assignment</h2>
+        <input type="text" id="assignment-edit-name-input" placeholder="Name">
+        <div style="display: flex; gap: 20px;">
+            <input type="number" id="assignment-edit-grade-input" placeholder="Grade ( % )">
+            <input type="number" id="assignment-edit-weight-input" placeholder="Weight ( % )">
+        </div>
+        <button id="edit-assignment-popup-btn">Add</button>
+    </div>
+</div>
+
+<!-- task Popup Menu -->
+<div id="task-popup" class="popup">
+    <div class="popup-content">
+        <span id="close-task-popup" class="close-popup">&times;</span>
+
+        <h2>Manage Task</h2>
+        <label style="display: flex; margin: 20px 0px 10px 10px;">Required</label>
+        <input type="text" id="task-name-input" placeholder="Name">
+        <div style="display: flex; gap: 20px;">
+            <!-- label saying required-->
+            <input type="text" id="task-course-input" placeholder="Category">
+            <input type="date" id="task-date-input">
+        </div>
+
+        <!-- <label style="display: flex; margin: 20px 0px 10px 10px;">Optional</label>
+        <div>
+            <input type="number" id="task-grade-input" placeholder="Grade">
+            <input type="number" id="task-weight-input" placeholder="Weight">
+        </div> -->
+
+        <button id="add-task-popup-btn">Create</button>
+    </div>
+</div>
+
+<!-- filter Popup Menu -->
+<div id="filter-popup" class="popup">
+    <div class="popup-content">
+        <span id="close-filter-popup" class="close-popup">&times;</span>
+
+        <h2>Manage Filter</h2>
+        <label style="display: flex; margin: 20px 0px 10px 10px;">Apply Filters:</label>
+        <input type="text" id="task-name-input" placeholder="Name">
+        <div style="display: flex; gap: 20px;">
+            <!-- label saying required-->
+            <input type="text" id="task-course-input" placeholder="Course">
+            <input type="date" id="task-date-input">
+        </div>
+
+        <!-- <label style="display: flex; margin: 20px 0px 10px 10px;">Optional</label>
+        <div>
+            <input type="number" id="task-grade-input" placeholder="Grade">
+            <input type="number" id="task-weight-input" placeholder="Weight">
+        </div> -->
+
+        <button id="add-task-popup-btn">Create</button>
+    </div>
+</div>
+
+<div class="popup" id="signup-popup">
+    <div class="popup-content">
+        <span id="userPopupCloseButton" class="close-popup">&times;</span>
+        <h2>Sign up</h2><br/>
+        <form id="signup-form">
+            <div class="input">
+                <input type="email" id="signup-email" placeholder = "Email" required />
+            </div>
+            <div style="margin-bottom: 20px;" >
+                <input type="password" id="signup-password" placeholder = "Password" required />
+            </div>
+            <!-- <div>
+                <input type="text" id="signup-bio" placeholder = "One Line Bio" required />
+            </div> -->
+            <button>Sign up</button>
+        </form>
+    </div>
+</div>
+
+<div class="popup" id="account-popup">
+    <div class="popup-content">
+        <span id="accountPopupCloseButton" class="close-popup">&times;</span>
+        <h2>Sign in / Save </h2><br/>
+
+        <!-- Email display given the user is logged in -->
+        <div id="account-details" class="logged-in" style="margin-bottom: 40px;"></div>
+
+        <h4 style="margin-top: 30px; margin-bottom: 10px; text-align: center;">Firebase Cloud Save</h4>
+        <div class="accountButtonBox">
+            <button id="userPopupButton" class = "logged-out" style="display: block; margin: 0 auto;"><i class="fa fa-user fa-regular "></i> Sign up </button>
+            <button id="userLoginPopupButton" class = "logged-out" style="display: block; margin: 0 auto;"><i class="fa fa-user fa-regular "></i> Login </button>
+            <button id="Firebase-save-btn" class="logged-in" style="display: none; text-decoration: none; color: inherit;"> Save to Cloud <i class="fa fa-save"></i></button>
+            <button href="#" id="logout" class="logged-in" style="display: none; text-decoration: none; color: inherit;">
+                    Logout <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </div>
+
+        <h4 style="margin-top: 30px; margin-bottom: 10px; text-align: center;">Save / Load Locally:</h4>
+        <div class="accountButtonBoxHorizontal">
+            <button class="custom-file-input" id="save-btn" title="Save all data to downloads folder" style="margin: 0;"><i class="fa fa-save"></i></button>
+            <label class="custom-file-input button" for="fileInput" title="Load data from a previous save file"><i class="fa fa-folder-open"></i></label>
+            <input type="file" id="fileInput">
+        </div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js"></script>
+
+<script>
+    // Initialize Firebase
+    const config = {
+        apiKey: "AIzaSyBO2KJaF9rHOLopMEU22F1Es8-qgZNlLM4",
+        authDomain: "academic-organizer.firebaseapp.com",
+        projectId: "academic-organizer",
+        storageBucket: "academic-organizer.appspot.com",
+        messagingSenderId: "708999915370",
+        appId: "1:708999915370:web:68e25a6f6d2d47b585a713",
+        measurementId: "G-5NDDY4FDVL"
+    };
+    firebase.initializeApp(config);
+</script>
+
+<div class="overlay"></div>
+<script type="module" src="./JS/auth.js"></script>
+<script src="./JS/Assignment.js"></script>
+<script src="./JS/Course.js"></script>
+<script src="./JS/Persistence.js"></script>
+<script src="./JS/StickyNav.js"></script>
+<script src="./JS/Task.js"></script>
+<script src="./JS/TaskManager.js"></script>
+<script src="./JS/CourseManager.js"></script>
+<script src="./JS/Calendar.js"></script>
+<script src="./JS/App.js"></script>
+
+<!-- Mobile Alert -->
+<script>
+    window.addEventListener('resize', function() {
+        if (window.innerWidth < 768) {
+            alert('This website is intended to be viewed on a desktop, if you are on a phone or tablet, you may try rotating the phone to get a better look but you are most likely looking at a formatting nightmare.');
+        }
+    });
+</script>
+
+</body>
+</html>

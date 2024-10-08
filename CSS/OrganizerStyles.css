@@ -1,31 +1,40 @@
-/* Basic Reset */
-/*----------------------------------------*/
-/* Normalize CSS */
-/*----------------------------------------*/
+html, body {
+    cursor: default;
+}
 
-/* Typography */
-/*----------------------------------------*/
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #FFF; /* Light text for dark background */
-    background-color: #1f1f1f; /* Dark background */
+    background-color: #262929; /* Dark background */
     margin: 0;
     padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
-    color: #FF4500; /* Orange heading */
+    color: #f46a6a;
     margin: 0;
 }
 
+h4 {
+    font-size: 15px;
+}
+
+
 h2 {
-    font-size: 30px;
+    font-size: 25px;
     margin-bottom: 20px;
     text-transform: uppercase; /* Convert text to uppercase for emphasis */
     letter-spacing: 2px; /* Add letter spacing for readability */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow for depth */
+}
+
+.assignment.assignment-details-container h4 {
+    color: #ffffff; /* Orange heading */
 }
 
 /* Containers */
@@ -46,15 +55,21 @@ h2 {
     box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Subtle shadow for depth */
 }
 
+
 .persistent-elements {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: #afafaf 1px solid;
-    border-bottom: #afafaf 1px solid;
-    padding: 15px;
-    margin-top: 35px;
-    background-color: #3c3c3c;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 40px;
+    /* background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDEwMCAxMDAiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9InBhdHRlcm4iIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgcGF0dGVyblR5cGU9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHJlY3Qgd2lkdGg9IjI1IiBoZWlnaHQ9IjI1IiBmaWxsPSIjZmY1NTAwIi8+CiAgICAgIDxyZWN0IHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgeT0iMjUiIGZpbGw9IiMwMDAwODAiLz4KICAgIDwvcGF0dGVybiA+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMmIxYjFiIiAvPgogIDxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIiBvcGFjaXR5PSIwLjA0IiAvPgo8L3N2Zz4K'); */
+    box-shadow: 0 0 3px rgba(2, 2, 2, 0.9);
+    border-bottom: 1px solid #555555;
+    z-index: 9998;
+    background-image: linear-gradient(#703434, #321137);
+    border-top: solid black 1px;
+    position: relative;
 }
 
 .persistent-elements > :first-child {
@@ -63,6 +78,15 @@ h2 {
 
 .persistent-elements > :not(:first-child) {
     justify-self: flex-end;
+}
+
+/* Sticky navbar styles for non-mobile */
+.persistent-elements.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 98.2%;
+    z-index: 1000;
 }
 
 /* Header */
@@ -82,11 +106,12 @@ h2 {
 /* Course Section */
 /*----------------------------------------*/
 .course {
-    background-color: #333; /* Darker gray background */
-    padding: 20px;
-    margin: 50px 30px 50px 30px;
+    background-color: #312f2f; /* Darker gray background */
+    padding: 60px;
+    margin: 40px 30px 50px 30px;
     border-radius: 10px;
-    border: 1px solid #afafaf; /* Add border */
+    box-shadow: 0 0 5px #893333;
+    border: #000000 2px solid;
 }
 
 .course h3 {
@@ -96,36 +121,64 @@ h2 {
 /* Grades Section */
 /*----------------------------------------*/
 .grades-section {
-    border: #828282 1px solid;
-    padding: 0px 12px 20px 12px;
+    border: #000000 2px solid;
+    padding: 30px;
     border-radius: 10px;
     background-color: #2b2b2b;
+    width: 1280.8px;
+    margin: 0 auto; /* Add this line to center the element horizontally */
+    box-shadow: 0 0 3px rgb(0, 0, 0); /* Subtle shadow for depth */
+}
+
+/* make the last child inside the grades section have no bottom margin */
+.grades-section > :last-child {
+    margin-bottom: 0;
 }
 
 /* custom scrollbar */
 /*----------------------------------------*/
 /* For Firefox */
-* {
+.courses-loaded {
+    height: calc(100vh - 91px); /* Adjust the height as needed */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: scroll;
+    background: rgb(38, 41, 41);
+}
+
+/* Custom scrollbar styles */
+/* For Firefox */
+.courses-loaded {
     scrollbar-width: thin;
     scrollbar-color: #777 #1f1f1f;
 }
 
 /* For Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
+.wrapper::-webkit-scrollbar {
     width: 10px; /* Set the width of the scrollbar */
 }
 
-*::-webkit-scrollbar-track {
+.wrapper::-webkit-scrollbar-track {
     background-color: #1f1f1f; /* Dark gray background */
-}
+    }
 
-*::-webkit-scrollbar-thumb {
+.wrapper::-webkit-scrollbar-thumb {
     background-color: #777; /* Neutral thumb color */
     border-radius: 5px; /* Rounded corners */
 }
 
-*::-webkit-scrollbar-thumb:hover {
+.wrapper::-webkit-scrollbar-thumb:hover {
     background-color: #555; /* Darker shade of neutral color on hover */
+}
+
+/* Optional: Styles to ensure content area takes full height */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Hide default scrollbars */
 }
 
 /* Assignment Styles */
@@ -135,11 +188,8 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #444; /* Gray background */
+    background-color: #2b2b2b; /* Gray background */
     padding: 15px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
     border: 1px solid #777; /* Add border */
 }
 
@@ -153,28 +203,31 @@ h2 {
 /*----------------------------------------*/
 
 .custom-file-input {
-    font-size: 14.5px;
+    font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
     --accent: rgb(255, 85, 0);
-    font-weight: bold;
-    letter-spacing: 0.1em;
-    border: #FF4500 2px solid;
-    border-radius: 1.1em;
-    background-color: #3e3e3e;
+    border: #000000 2px solid;
+    border-radius: 10px;
+    background-color: #1f1f1f;
     cursor: pointer;
     color: white;
-    padding: 1em 2em;
     transition: box-shadow ease-in-out 0.3s, background-color ease-in-out 0.1s,
         letter-spacing ease-in-out 0.1s, transform ease-in-out 0.1s;
+    width: 81.2px;
+    height: 46.8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 81.2px;
+    max-height: 46.8px;
 }
 
 .custom-file-input:hover {
-    background-color: #ff5c21;
+    background-color: #feb5e0;
+    color: black;
 }
 
 .custom-file-input:active {
-    box-shadow: var(--hover-shadows), var(--accent) 0px 0px 30px 5px;
-    background-color: var(--accent);
     transform: scale(0.95);
 }
 
@@ -182,22 +235,29 @@ h2 {
     display: none;
 }
 
+
 /* Dropdown Styles */
 /*----------------------------------------*/
-#course-dropdown {
-    background-color: #3e3e3e; /* Dark gray background */
-    color: #FFF; /* Light text */
-    padding: 15px; /* Add some padding */
-    border: 2px solid #FF4500; /* Orange border */
+.course-dropdown {
+    background-color: #1f1f1f; /* Dark gray background */
+    color: rgb(226, 226, 226); /* Light text */
+    padding-left: 10px;
+    padding-right: 0px;
+    /* padding-top: 5px;
+    padding-bottom: 20px; */
+    border: 2px solid #000000;
     border-radius: 10px; /* Add border radius */
     cursor: pointer;
     width: auto; /* Set width to fill the container */
-    font-size: 16px; /* Font size */
     outline: none; /* Remove default outline */
-    font-size: 20px;
+    font-size: 15px;
+    height: 50px;
+    width: 325px;
+    letter-spacing: 0.05em;
+    text-align: center; /* Center align the text */
 }
 
-#course-dropdown option {
+.course-dropdown option {
     background-color: #555; /* Dark gray background */
     color: #FFF; /* Light text */
     padding: 10px; /* Add some padding */
@@ -231,16 +291,13 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #555; /* Dark gray background */
+    background-color: #292929; /* Dark gray background */
     padding: 15px;
-    border-radius: 8px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border: 1px solid #777; /* Add border */
+    border: 2px solid #000000;
 }
 
 .legend > div {
-    width: 20%;
+    width: 25%;
     text-align: left;
 }
 
@@ -280,7 +337,7 @@ h2 {
     height: 100%;
     overflow: auto;
     background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,4);
     z-index: 9998; /* Higher z-index than the overlay */
 }
 
@@ -320,13 +377,14 @@ h2 {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.65);
     z-index: 9998; /* Higher z-index than the overlay */
 }
 
+
 .popup-content {
     background-color: #333; /* Dark gray background */
-    margin: 15% auto;
+    margin: 10% auto;
     padding: 20px;
     border-radius: 10px;
     width: 25%;
@@ -335,17 +393,18 @@ h2 {
 }
 
 .popup h2 {
-    color: #FF4500; /* Orange heading */
     margin-bottom: 15px;
     font-size: 20px;
 }
 
 .popup input[type="text"],
-.popup input[type="number"] {
+.popup input[type="number"],
+.popup input[type="email"],
+.popup input[type="password"]{
     background-color: #555; /* Dark gray background */
     color: #FFF; /* Light text */
     padding: 10px; /* Add some padding */
-    border: 2px solid #FF4500; /* Orange border */
+    border: #f46a6a 2px solid; /* Orange border */
     border-radius: 5px; /* Add border radius */
     width: calc(100% - 22px); /* Subtract padding and border width */
     font-size: 16px; /* Font size */
@@ -353,24 +412,10 @@ h2 {
 }
 
 .popup input[type="text"]::placeholder,
-.popup input[type="number"]::placeholder {
+.popup input[type="number"]::placeholder,
+.popup input[type="email"]::placeholder,
+.popup input[type="password"]::placeholder {
     color: #FFF; /* Light text */
-}
-
-/* 
-.popup button {
-    background-color: #FF4500; 
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%;
-} */
-
-.popup button:hover {
-    background-color: #EAECEE; /* Lighter orange for hover */
 }
 
 .popup .close {
@@ -416,16 +461,23 @@ h2 {
     font-size: 20px;
 }
 
+.overall-grade {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin-top: 100px;
+}
+
 .assignment.assignment-details-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #444; /* Dark gray background */
+    background-color: #414141; /* Dark gray background */
     padding: 15px;
-    border-radius: 8px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border: 1px solid #777; /* Add border */
+    border: 2px solid #000000; /* Add border */
+    box-shadow: 0 0 1px rgb(218, 62, 0);
 }
 
 .assignment.assignment-details-container > div {
@@ -462,31 +514,706 @@ h2 {
 
 /* different button testing */
 button {
-    font-size: 14.5px;
+    font-size: 15px;
     --accent: rgb(255, 85, 0);
-    font-weight: bold;
-    letter-spacing: 0.1em;
-    border: #FF4500 2px solid;
-    border-radius: 1.1em;
-    background-color: #3e3e3e;
+    letter-spacing: 0.07em;
+    border: #888888 1px solid;
+    border-radius: 10px;
+    background-color: #1f1f1f;
     cursor: pointer;
-    color: white;
-    padding: 1em 2em;
-    transition: box-shadow ease-in-out 0.3s, background-color ease-in-out 0.1s,
-        letter-spacing ease-in-out 0.1s, transform ease-in-out 0.1s;
+    color: rgb(255, 255, 255);
+    padding: 0.75em 1.5em;
+    width: 190px;
+    max-width: 190px;
+    height: 45px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
 }
 
 button:hover {
-    background-color: #ff5c21;
+    background-color: #c24f4f;
 }
 
 button:active {
-    box-shadow: var(--hover-shadows), var(--accent) 0px 0px 30px 5px;
-    background-color: var(--accent);
     transform: scale(0.95);
 }
 
 #add-assignment-popup-btn {
     width: 100%;
 }
-  
+
+button.secondary {
+    font-size: 20px; /* Matched font size */
+    letter-spacing: 0.1em; /* Kept letter spacing */
+    border: 1px solid #f46a6a; /* Set the border to white */
+    border-radius: 20px; /* Made border radius consistent */
+    background-color: rgb(47, 47, 47);
+    cursor: pointer; /* Kept cursor style */
+    color: white;
+    padding: 0.5em 1em; /* Adjusted padding for consistency */
+    transition: box-shadow ease-in-out 0.3s, background-color ease-in-out 0.1s,
+                letter-spacing ease-in-out 0.1s, transform ease-in-out 0.1s; 
+}
+
+button.secondary:active {
+    transform: scale(0.95);
+    color: white;
+}  
+
+/* Style for date input */
+input[type="date"] {
+    background-color: #555; /* Dark gray background */
+    color: #FFF; /* Light text */
+    padding: 10px; /* Add some padding */
+    border: 2px solid #f46a6a; /* Orange border */
+    border-radius: 5px; /* Add border radius */
+    width: calc(100% - 22px); /* Subtract padding and border width */
+    font-size: 16px; /* Font size */
+    margin-bottom: 15px; /* Add margin below the input */
+}
+
+.task-menu-container {
+    background-color: rgb(30, 30, 30);
+    padding: 60px;
+    box-shadow: 0 0 10px #000000;
+    border: #2e2e2e 1px solid;
+    height: 100vh;
+}
+
+.task-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 28px;
+    border-radius: 10px;
+    background-color: #353535;
+    gap: 30px;
+    width: 80vw;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.task-container-top {
+    display: flex;
+    flex-wrap: wrap;
+    border: #5a5a5a 2px solid;
+    padding: 28px;
+    border-radius: 10px;
+    background-color: #353535;
+    gap: 40px;
+    justify-content: center; /* Center the rows horizontally */
+    align-items: center;
+    justify-items: left;
+    align-content: center;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 3px rgba(2, 2, 2, 0.9);
+    text-align: left; /* Add text-align property to align text left */
+}
+
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #373737; /* Dark gray background */
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #777; /* Add border */
+    width: 245px;
+    max-width: 280px;
+    transition: background 0.1s, border 0.1s; /* Added transition property for background and border */
+}
+
+.task:hover {
+    background: rgb(68, 68, 68);
+    border: rgb(240, 100, 100) 1px solid;
+    transition: background 0.1s, border 0.1s; /* Added transition property for background and border */
+}
+
+.task > div {
+    text-align: left;
+}
+
+.menu-info {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    justify-content: center;
+    gap: 50px;
+}
+
+.menu-info-internal {
+    border: #808080 1px solid;
+    padding: 25px;
+    border-radius: 10px;
+    background-color: #313131;
+    box-shadow: 0 0 3px rgba(2, 2, 2, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 20vw;
+    height: 100px;
+    max-width: 400px;
+}
+
+.menu-info-internal > :first-child {
+    margin-top: 10px;
+}
+
+.menu-info-internal > :last-child {
+    margin-bottom: 10px;
+}
+.delete-button-wrapper {
+    gap: 15px;
+    justify-content: center;
+}
+
+.highlight {
+    transform: scale(0.95);
+    background-color: #8c3f3f;
+    border: black 2px solid;
+}
+
+.nav-element {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-menu-buttons {
+    background-color: #353535;
+    border-radius: 10px;
+    padding: 10px;
+    border: 2px black solid;
+    box-shadow: 0 0 6px #6c1010;
+    max-width: 530px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: left;
+}
+
+.course-menu-buttons {
+    background-color: #353535;
+    border-radius: 10px;
+    padding: 9px;
+    border: #5a5a5a 2px solid;
+    box-shadow: 0 0 3px rgba(2, 2, 2, 0.9);
+    margin-top: 5px;
+    justify-content: space-evenly; /* Modified: Use center to align elements horizontally */
+    align-content: center;
+    display: flex;
+    width: 83vw;
+    height: 80px;
+    margin-bottom: 35px;
+}
+
+button.secondary.TaskAdd-btn {
+    background-color: green;
+}
+
+button.secondary.incomplete {
+    color: rgb(200, 20, 20);
+}
+
+button.secondary.complete {
+    color: rgb(0, 172, 0);
+}
+
+.assignment-operators.secondary.incomplete:hover {
+    color: white;
+}
+
+.task-options {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.TaskDelete-btn.secondary.ass-delete-button.assignment-operators,
+.secondary.assignment-operators.TaskEdit-btn,
+.secondary.complete.assignment-operators.TaskComplete-btn {
+    color: white;
+    width: 50px;
+    height: 40px;
+    font-size: 17px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#TaskFilter-btn,
+#TaskSort-btn,
+.TaskAdd-btn.secondary {
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    background-color: rgb(177, 31, 31);
+}
+
+.TaskAdd-btn.secondary {
+    color: white;
+}
+
+#TaskFilter-btn:hover,
+#TaskSort-btn:hover {
+    border: 1px solid white; /* Set the border to white */
+    color: white;
+    background-color: rgb(47, 47, 47);
+}
+
+#TaskFilter-btn.complete,
+#TaskSort-btn.complete {
+    border: 1px solid rgb(163, 163, 163);
+    color: white;
+    background-color: #333; /* Darker background color */
+}
+
+button.secondary.assignment-operators {
+    width: 60px;
+    height: 50px;
+}
+
+button.secondary:Hover {
+    background-color: rgb(47, 47, 47);
+    border:#d4d4d4 1px solid;
+    color: #FFF; /* White text */
+}
+
+button.secondary:Hover {
+    background-color: rgb(47, 47, 47);
+    border:#d4d4d4 1px solid;
+    color: #FFF; /* White text */
+}
+
+
+button.secondary.assignment-operators:hover {
+    background-color: #db5341;
+    border:#f46a6a 1px solid;
+    color: white; /* White text */
+}
+
+.meta-task {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 1300px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.task-menu-buttons {
+    background-color: #2b2b2b;
+    border-radius: 10px;
+    padding: 10px;
+    border: 2px black solid;
+    box-shadow: 0 0 3px rgb(245, 49, 0);
+    max-width: 520px;
+    justify-content: center; /* Centers children horizontally */
+    align-items: center; /* Centers children vertically */
+    display: flex;
+    margin: 0 auto; /* Centers the div itself horizontally */
+}
+
+.operations-container {
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+}
+
+.course-menu-info {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1250px;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 50px;
+    display: flex;
+    justify-content: center;
+    text-align: left;
+}
+
+.course-assignments-container {
+    width: 1265px;
+    display: block;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 10px;
+    background: rgb(39, 39, 39);
+    box-shadow: 0 0 2px rgb(16, 16, 16);
+}
+
+.course-assignments-container > *:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+#progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #d7d7d7;
+    border-radius: 10px;
+    border: 3px solid #434343;
+    box-shadow: 0 1px 2px rgba(128, 128, 128, 0.1), 0 0 0 1px rgb(144, 144, 144);
+}
+
+.progress-bar-fill-style {
+    width: 0%;
+    height: 100%;
+    background-color: #008000;
+    border-radius: 7px;
+    text-align: center;
+    text-justify: center;
+    color: black;
+    font-weight: bold;
+    line-height: 19px;
+    border-right: 2px solid #2a2a2a;
+    text-indent: 4px; /* Move the text 4px to the right */
+}
+
+.AssignmentAdd-btn,
+.TaskAdd-btn,
+.CourseAdd-btn {
+    color: rgb(52, 189, 52);
+}
+
+.CourseDelete-btn {
+    color: rgb(249, 75, 75);
+}
+
+/* Landing page */
+/*----------------------------------------*/
+.landing-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 80vw;
+}
+
+.landing-container h2 {
+    font-size: 30px;
+    color: #d73333;
+}
+.landing-container h3 {
+    font-size: 23px;
+    color: #ed7373;
+}
+
+.landing-container p {
+    font-size: 20px;
+    color: #e5e5e5; /* Light text */
+    text-align: left;
+    line-height: 2; /* Increase line spacing */
+    margin: 0px;
+}
+
+.landing-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    background: #393939;
+    border: #5a5a5a 2px solid;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #000000;
+    width: 50vw;
+}
+
+.landing-content > *:first-child {
+    align-self: flex-start;
+    order: -1; /* Move the first child to the top */
+    margin-top: 0; /* Add margin-top to move it to the very top */
+}
+
+.landing-content > *:not(:first-child) {
+    flex: 1; /* Distribute remaining space evenly */
+}
+.landing-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 70%;
+    text-align: left;
+}
+
+.landing-right {
+    padding: 25px 12.5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 30%;
+    justify-content: center;
+    align-items: center;
+    background: #2b2b2b;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px #000000;  
+    /* align children  */
+}
+
+.landing-right button{
+    margin: 0px;
+}
+
+#google-sign-in-btn {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    color: #000000;
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    padding: 10px 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#google-sign-in-btn img {
+    height: 18px;
+    margin-left: 10px;
+}
+
+#google-sign-in-btn:hover {
+    background-color: #c3c0c0;
+    color: black;
+}
+
+body.GTLanding {
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ee4c90, #632c72, #14e5e9, #3244cd);
+    background-size: 150% 150%;
+    transition: background-position 0.1s ease;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: #FFF; /* Light text color */
+    background-color: #1e1e1e; /* Dark gray background */
+}
+
+.feature-accordion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #2b2b2b; /* Dark gray background */
+    background: #2b2b2b;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px #000000;
+    padding: 10px;
+}
+
+.accordion {
+    background-color: #2b2b2b; /* Dark gray background for accordion */
+    color: #FFF; /* Light text color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    margin-bottom: 20px; /* Space between accordions */
+    width: 400px;
+}
+
+.accordion-header {
+    background-color: #353535; /* Slightly lighter gray for the header */
+    padding: 15px; /* Padding around header */
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer; /* Indicate it’s clickable */
+    font-weight: bold; /* Bold text */
+    font-size: 18px; /* Font size */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    width: 100%; /* Expand to full width */
+    max-width: 999999px;;
+}
+
+.accordion-header:hover {
+    background-color: #232323; /* Darker shade on hover */
+}
+
+.accordion-content {
+    padding: 15px; /* Padding around content */
+    background-color: #414141; /* Darker gray for content area */
+    border-radius: 0 0 10px 10px; /* Only round bottom corners */
+    display: none; /* Hidden by default */
+}
+
+.accordion-content p {
+    margin: 0; /* Remove default margin */
+    font-size: 16px; /* Font size for content */
+    line-height: 1.5; /* Line height for readability */
+}
+
+.accordion.open {
+    width: 100%; /* Expand to full width when open */
+}
+
+/* Optional styles for open accordion */
+.accordion.open .accordion-content {
+    display: block; /* Show content when open */
+}
+
+/* Optional styles for active header */
+.accordion.open .accordion-header {
+    background-color: #543d3d; /* Highlight active header */
+    /* remove bottom border, make bottom left and right corners NOT rounded */
+    border-radius: 10px 10px 0 0;
+}
+
+/* target GTLanding.html body, center and align all content */
+.GT-landing-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Container for the entire calendar */
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the calendar */
+    border: #5a5a5a 2px solid;
+    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0 0 3px rgba(2, 2, 2, 0.9); /* Optional: subtle shadow */
+    margin-top: 10px;
+    padding: 25px;
+    background: #313131;
+    min-width: 80vw;
+}
+
+/* Row representing a week */
+.week-row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: left; /* Distribute day boxes evenly */
+}
+
+/* Individual day box */
+.day-box {
+    color: rgb(35, 35, 35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 7); /* Width of each day box to fit in a row of 7 boxes */
+    height: 50px; /* Height of each day box */
+    border-right: 1px solid #ddd; /* Vertical separator */
+    border-bottom: 1px solid #ddd; /* Horizontal separator */
+    box-sizing: border-box; /* Ensure padding and border are included in the width and height */
+    font-size: 14px; /* Adjust the font size as needed */
+    font-family: Arial, sans-serif; /* Set a font family */
+    background: rgb(235, 235, 235);
+    border: black 1px solid;
+    min-height: 10vh;
+}
+
+/* Remove the right border for the last day in each row */
+.week-row .day-box:nth-child(7n) {
+    border-right: none;
+}
+
+/* Optional: hover effect for day boxes */
+.day-box:hover {
+    background-color: #dbb9b9; /* Light grey background on hover */
+    border: rgb(222, 122, 122);
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.currentday {
+    background: linear-gradient(135deg, #c89e9e, #b37275);
+}
+
+.legend-box {
+    background: rgb(169, 169, 169);
+}
+
+.date-display-box {
+    padding: 25px;
+    border: 2px solid #5a5a5a;
+    border-radius: 8px;
+    background-color: #313131;
+    font-size: 16px;
+    text-align: center;
+    box-shadow: 0 0 3px rgba(2, 2, 2, 0.9);
+    max-width: 80vw;
+    justify-self: center;
+    align-self: center;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.landing-top {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    text-align: center;
+}
+
+.signup-popup {
+    background: black;
+    height: 300px;
+    width: 200px;
+    display: none;
+}
+
+.login-popup {
+    background: rgb(255, 0, 0);
+    height: 300px;
+    width: 200px;
+}
+
+.accountButtonBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 275px;
+    background-color: #353535;
+    border-radius: 10px;
+    padding: 10px;
+    border: 2px black solid;
+    box-shadow: 0 0 6px #969292;
+    gap: 10px;
+}
+
+.accountButtonBoxHorizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 275px;
+    background-color: #353535;
+    border-radius: 10px;
+    padding: 10px;
+    border: 2px black solid;
+    box-shadow: 0 0 6px #969292;
+    gap: 10px;
+}

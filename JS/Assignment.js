@@ -1,11 +1,11 @@
 // Assignment.js
 class Assignment {
-    constructor(name, grade, weight) {
-        this.id = id;
+    constructor(name, grade, weight, completed = false) {
+        this.id = null;
         this.name = name;
         this.grade = grade;
         this.weight = weight;
-        this.completed = false;
+        this.completed = completed;
     }
 
     markAsComplete() {
