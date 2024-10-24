@@ -1,159 +1,171 @@
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-firestore.js";
 
-// Initialize Firebase services
-const auth = getAuth();
-const db = getFirestore();
+// IMPORTS
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
 // DOM ELEMENTS
 const loggedOutLinks = document.querySelectorAll('.logged-out');
 const loggedInLinks = document.querySelectorAll('.logged-in');
 const accountDetails = document.getElementById('account-details');
+var userData;
 var userID;
 
-// listen for auth status changes
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    userID = user.uid;
-    // account info
-    const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists()) {
-            const html = `Logged in as ${user.email}`;
-            accountDetails.textContent = html;
-    }
-
-    loggedInLinks.forEach(item => item.style.display = 'block');
-    loggedOutLinks.forEach(item => item.style.display = 'none');
-
-    console.log("User Logged In: ", user);
-
-    const dbRef = ref(db, 'users/' + userID);
-
-    console.log("Data retrieved:", dbRef);
-
-    // Retrieve the data
-    get(dbRef)
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          console.log("Data retrieved:", snapshot.val());
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.error("Error retrieving data: ", error);
-      });
-
-
-    // grab the user's associated doc and console log the results, additionally try to impose new managers
-    db.collection('users').doc(user.uid).get().then(doc => {
-      
-      console.log("User document object");
-      console.log(doc.data);
-      console.log("WIth brackets");
-      console.log(doc.data());
-      console.log("Course array check");
-      console.log(doc.data().courses);
-      
-      // console.log("4");
-      courseManager.courses = doc.data().courses;
-      taskManager.tasks = doc.data().tasks;
-
-      console.log("Replacement testing:");
-      console.log(courseManager.courses);
-      console.log(taskManager.tasks);
-
-      console.log("Final Object stats:");
-      console.log(courseManager);
-      console.log(taskManager);
-
-    });
-  } else {
-    userID = null;
-    loggedInLinks.forEach(item => item.style.display = 'none');
-    loggedOutLinks.forEach(item => item.style.display = 'block');
-    console.log("User Logged Out");
-  }
-});
+// firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyBO2KJaF9rHOLopMEU22F1Es8-qgZNlLM4",
+  authDomain: "academic-organizer.firebaseapp.com",
+  projectId: "academic-organizer",
+  storageBucket: "academic-organizer.appspot.com",
+  messagingSenderId: "708999915370",
+  appId: "1:708999915370:web:68e25a6f6d2d47b585a713",
+  measurementId: "G-5NDDY4FDVL"
+};
   
-// save user data as JSON to firebase
-const cloudSaveButton = document.getElementById('Firebase-save-btn');
-cloudSaveButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  console.log("womp womp womp");
+// Initialize Firebase services
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
 
-  // The reference where you want to store the data
-  const dbRef = ref(database, 'users/' + userID);
-
-  const data = {
-      courses: courseManager.courses,
-      tasks: taskManager.tasks,
-      // calendar: calendarManager.events
-  };
-
-  // Convert the data to JSON
-  const jsonObject = JSON.stringify(data);
-
-  // Store the JSON object
-  set(dbRef, jsonObject) 
-    .then(() => {
-      console.log("Data stored successfully.");
-    })
-    .catch((error) => {
-      console.error("Error storing data: ", error);
-    });
-
-  // return db.collection('users').doc(userID).set({
-  //   course: courseManager.courses,
-  //   task: taskManager.tasks,
-  //   // calendar: calendarManager
-  // });
-});
-
-// signup
+// ======================================== ACCOUNT MANAGEMENT ========================================
+// Signup =============================================================================================
 const signupForm = document.querySelector('#signup-form');
 signupForm.addEventListener('submit', (e) => {
   e.preventDefault();
   
-  // get user info
+  // Getting user info from form
   const email = signupForm['signup-email'].value;
   const password = signupForm['signup-password'].value;
 
-  // sign up the user & add firestore data
-  auth.createUserWithEmailAndPassword(email, password).then(cred => {
-    return db.collection('users').doc(cred.user.uid).set({
-      bio: "womp womp womp"
-    });
-  }).then(() => {
-    // close the signup modal & reset form
+  // Sign the user up for authentication
+  auth.createUserWithEmailAndPassword(email, password).then(() => {
     closeSignup();
     signupForm.reset();
   });
 
+  // // Add user reference to database
+  // set(ref(db, 'users/' + user.uid), {
+    
+  // }).then (() => {
+  //   console.log("User Added to Database");
+  // });
+
   console.log("User Created");
 });
+
+// Login ==============================================================================================
+const loginForm = document.querySelector('#login-form');
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
   
-// logout
+  // Get user info from form
+  const email = loginForm['login-email'].value;
+  const password = loginForm['login-password'].value;
+
+  // Log user in
+  signInWithEmailAndPassword(auth, email, password).then((cred) => {
+    closeLogin();
+    loginForm.reset();
+  });
+});
+  
+// Logout =============================================================================================
 const logout = document.getElementById('logout');
 logout.addEventListener('click', (e) => {
   console.log("User Logged Out");
   e.preventDefault();
   auth.signOut();
 });
-  
-// login
-const loginForm = document.querySelector('#login-form');
-loginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  // get user info
-  const email = loginForm['login-email'].value;
-  const password = loginForm['login-password'].value;
 
-  // log the user in
-  auth.signInWithEmailAndPassword(email, password).then((cred) => {
-    // close the signup modal & reset form
-    closeLogin();
-    loginForm.reset();
-  });
+// Login Status ======================================================================================
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    userID = user.uid;
+    const userRef = ref(db, 'users/' + user.uid);
+
+    loggedInLinks.forEach(item => item.style.display = 'block');
+    loggedOutLinks.forEach(item => item.style.display = 'none');
+    
+    // Get realtime user data 
+    onValue(userRef, (snapshot) => {
+      userData = snapshot.val();
+      console.log("User Data:", userData);
+
+      // Load data from database to local storage
+      if (userData) {
+        console.log("Loading data from database to local storage");
+        // console.log(userData.courseManager.tasks);
+        // console.log(taskManager);
+
+
+        // // Update the properties of taskManager
+        // taskManager = userData.courseManager.tasks;
+        // if (taskManager.tasks) {
+        //   console.log(taskManager.tasks);
+        //   taskManager.display();
+        //   taskManager.updateTimeRemaining();
+        //   taskManager.startLoop();
+        // }
+        
+        // console.log(userData.courseManager.courses);
+
+        // Update the properties of courseManager
+        courseManager.courses = userData.courseManager.courses.map(courseData => {
+            const course = new Course(courseData.id, courseData.name);
+            Object.assign(course, courseData);
+            return course;
+        });
+        console.log(courseManager.courses);
+        var courseID = courseManager.selectFirstCourse();
+        courseManager.selectCourse(courseID);
+        courseManager.display();
+        courseManager.displayAssignments(courseID);
+        console.log("displaying Assignments in Course: " + courseManager.selectedCourse.id);
+      }
+
+      accountDetails.innerHTML = `Signed in as - ${user.email}`;
+    });
+
+    console.log("User Logged In: ", user);
+  } 
+  
+  else {
+    userID = null;
+    loggedInLinks.forEach(item => item.style.display = 'none');
+    loggedOutLinks.forEach(item => item.style.display = 'block');
+    console.log("User Logged Out");
+  }
 });
+
+// ======================================== DATABASE MANAGEMENT ========================================
+// Copy data from database to local storage ============================================================
+
+
+
+// Copy data from local storage to database ============================================================
+document.getElementById('Firebase-save-btn').addEventListener('click', () => {
+  console.log("save button pressed");
+  var data = {
+      courses: courseManager.courses,
+      tasks: taskManager,
+    //   calendar: calendarManager.events
+  };
+  saveDataToDatabase(data);
+});
+
+function saveDataToDatabase(data) {
+  console.log("Saving data to database");
+  console.log(data)
+  userID = auth.currentUser.uid;
+  if (userID && data) {
+    set(ref(db, 'users/' + userID + '/courseManager'), data)
+      .then(() => {
+        console.log("Data saved to database");
+      })
+      .catch((error) => {
+        console.error("Error saving data to database: ", error);
+      }); 
+  } else {
+    console.log("No user logged in or no data provided");
+  }
+};

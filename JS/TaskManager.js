@@ -184,6 +184,14 @@ class TaskManager {
     updateTaskCount() {
         this.completedTaskCount = 0;
         this.incompleteTaskCount = 0;
+
+        console.log("tasks length: " + this.tasks.length);
+        console.log(this.tasks);
+
+        if (this.tasks) {
+            return;
+        }
+
         this.tasks.forEach(task => {
             if (task.taskCompleted) {
                 this.completedTaskCount++;

@@ -145,7 +145,7 @@ h2 {
     left: 0;
     right: 0;
     overflow-y: scroll;
-    background: rgb(38, 41, 41);
+    background-color: rgb(30, 30, 30);
 }
 
 /* Custom scrollbar styles */
@@ -294,6 +294,7 @@ body, html {
     background-color: #292929; /* Dark gray background */
     padding: 15px;
     border: 2px solid #000000;
+    border-radius: 10px 10px 0 0; /* Add border radius */
 }
 
 .legend > div {
@@ -579,9 +580,7 @@ input[type="date"] {
 .task-menu-container {
     background-color: rgb(30, 30, 30);
     padding: 60px;
-    box-shadow: 0 0 10px #000000;
-    border: #2e2e2e 1px solid;
-    height: 100vh;
+    height: auto;
 }
 
 .task-container {
@@ -717,7 +716,7 @@ input[type="date"] {
     justify-content: space-evenly; /* Modified: Use center to align elements horizontally */
     align-content: center;
     display: flex;
-    width: 83vw;
+    width: 82vw;
     height: 80px;
     margin-bottom: 35px;
 }

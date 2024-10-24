@@ -286,6 +286,17 @@ class CourseManager {
         console.log(`Selected course: ${this.selectedCourse}`);
     }
 
+    selectFirstCourse() {
+        if (this.courses.length > 0) {
+            this.selectedCourse = this.courses.find(course => course !== null);
+            if (this.selectedCourse) {
+                this.displayAssignments(this.selectedCourse.id);
+                return this.selectedCourse.id;
+            }
+        }
+        return null;
+    }
+
     updateOverallProgress() {
         const progressBarFill = document.getElementById('progress-bar-fill');
         if (progressBarFill) {
@@ -699,7 +710,7 @@ class CourseManager {
         courseGradeElement.textContent = "0.00%";
         courseGradeElement.style.fontWeight = 'normal';
         courseGradeElement.style.color = 'black'; // Change text color to light blue
-        courseGradeElement.style.fontSize = '17px'; // Set font size to 20
+        courseGradeElement.style.fontSize = '18px'; // Set font size to 20
         courseGradeElement.style.textAlign = 'center'; // Center align the text
         menuInternalInfoDiv1.appendChild(courseGradeElement);
 
@@ -844,15 +855,6 @@ class CourseManager {
             legendItem.appendChild(legendItemText);
             legendDiv.appendChild(legendItem);
         });
-
-        // create title "Assignments" for the course assignments
-        let courseAssignmentsTitle = document.createElement('h3');
-        courseAssignmentsTitle.innerText = 'Assignments:';
-        courseAssignmentsTitle.style.fontSize = '22px';
-        courseAssignmentsTitle.style.textAlign = 'left'; // Add text alignment
-        courseAssignmentsTitle.style.marginLeft = '0'; // Set left margin to 0
-        courseAssignmentsTitle.style.marginRight = 'auto'; // Set left margin to 0
-        gradesSection.appendChild(courseAssignmentsTitle);
 
         // create a container for all course assignments and legend
         let courseAssignmentsContainer = document.createElement('div');

@@ -2,7 +2,7 @@ class SaveManager {
     saveToFile(courseManager, taskManager, calendarManager) {
         const data = {
             courses: courseManager.courses,
-            tasks: taskManager.tasks,
+            tasks: taskManager,
             // calendar: calendarManager.events
         };
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
@@ -14,7 +14,7 @@ class SaveManager {
         downloadAnchorNode.remove();
     }
 
-    loadFromFile(courseManager, taskManager, file) {
+    loadFromFile(courseManager, taskManager, calendarManager, file) {
         const reader = new FileReader();
         reader.readAsText(file, 'UTF-8');
         reader.onload = readerEvent => {
@@ -22,11 +22,11 @@ class SaveManager {
             const data = JSON.parse(content);
 
             // Update the properties of taskManager
-            taskManager.tasks = data.tasks;
-            console.log(taskManager.tasks);
-            taskManager.display();
-            taskManager.updateTimeRemaining();
-            taskManager.startLoop();
+            // taskManager = data.tasks;
+            // console.log(taskManager);
+            // taskManager.display();
+            // taskManager.updateTimeRemaining();
+            // taskManager.startLoop();
 
             // Update the properties of courseManager
             courseManager.courses = data.courses.map(courseData => {
@@ -34,13 +34,15 @@ class SaveManager {
                 Object.assign(course, courseData);
                 return course;
             });
+            
             console.log(courseManager.courses);
-            courseManager.selectCourse(0);
+            var courseID = courseManager.selectFirstCourse();
+            courseManager.selectCourse(courseID);
             courseManager.display();
-            courseManager.displayAssignments(0);
+            courseManager.displayAssignments(courseID);
             console.log("displaying Assignments in Course: " + courseManager.selectedCourse.id);
 
-            // Calendar manager stuff for later (not done yet)
+            // Uncomment and update the calendarManager if needed
             // calendarManager.events = data.calendar;
             // calendarManager.display();
         }
